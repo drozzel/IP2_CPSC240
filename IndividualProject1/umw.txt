@@ -1,0 +1,174 @@
+University of Mary Washington
+*****
+Locations:
+Double Drive
+Welcome to the University of Mary Washington! You are
+currently at the main entrance for the school.
++++
+James Farmer Hall
+This building is named after Dr. James Farmer and houses
+the Departments of Mathematics, Computer Science, CPR,
+Education and Asian Studies. It was built in 1941 and was
+originally the library. An addition was completed in 1963.
++++
+Campus Walk
+This sidewalk winds through the entire campus leading
+you to all other locations on campus.
++++
+Bell Tower
+The tower houses a clock and is a monumental piece at UMW
+built in 2007. The bell chimes twice a day at noon and 6pm.
++++
+George Washington Hall
+This building has all administrators and human resources.
+It was completed in 1939.
++++
+Combs Hall
+Combs Hall contains the Department of English and Linguistics.
+It was built in 1959.
++++
+Mason Hall 
+This is a residence hall across from GW. It is connected to 
+Randolph Hall through the Link.
++++
+Randolph Hall 
+This is a residence hall across from GW. It is connected to 
+Mason Hall through the Link.
++++
+Virginia Hall 
+This is the second oldest residence hall on campus. It was completed 
+in 1915. It has a lovely parlour off the lobby.
++++
+Lee Hall 
+Lee Hall houses the bookstore, student services and the health center.
++++
+Ball Circle
+This is a nice open space for students to relax, study outside, hang out with friends and 
+host events on campus. On a warm day you are likely to see students throwing a frisbee!
++++
+University Center 
+This is the newest building on campus being built in 2015. It has the main dining hall, 
+the James Farmer Multicultural Center (JFMC), the Community Outreach and Resources Center (COAR) 
+and many others.
++++
+The Link
+The Link is the section that connects Randolph and Mason Halls and is also a student residence.  
++++
+*****
+Doors:
+Double Drive
+n
+Bell Tower
++++
+Bell Tower
+s
+Double Drive
++++
+Double Drive
+e
+Combs Hall 
++++
+Combs Hall
+w
+Double Drive
++++
+Double Drive
+w
+George Washington Hall
++++
+George Washington Hall
+e
+Double Drive
++++
+Bell Tower
+w
+Campus Walk
++++
+Campus Walk
+e
+Bell Tower
++++
+Campus Walk
+w
+George Washington Hall
++++
+George Washington Hall
+e
+Campus Walk
++++
+Campus Walk
+e
+James Farmer Hall
++++
+James Farmer Hall
+w
+Campus Walk
++++
+Campus Walk
+e
+Mason Hall
++++
+Mason Hall
+w
+Campus Walk
++++
+Campus Walk
+e
+Randolph Hall
++++
+Randolph Hall
+w
+The Link
++++
+The Link
+e
+Randolph Hall
++++
+Mason Hall
+e
+The Link
++++
+The Link
+w
+Mason Hall
++++
+Campus Walk
+e
+Lee Hall 
++++
+Lee Hall
+w
+Campus Walk
++++
+Campus Walk
+w
+Ball Circle
++++
+Ball Circle
+e
+Campus Walk
++++
+Campus Walk
+w
+Virginia Hall
++++
+Virginia Hall
+e
+Campus Walk
++++
+Ball Circle
+n
+University Center
++++
+University Center
+s
+Ball Circle
++++
+Ball Circle
+e
+Virginia Hall
++++
+Virginia Hall
+w
+Ball Circle
+*****

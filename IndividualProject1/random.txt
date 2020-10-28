@@ -1,0 +1,15 @@
+hello
+hi
+this
+is
+random
+test
+text
+List<String> locationInfo = fileInfo.subList(fileInfo.indexOf("Locations:"),fileInfo.indexOf("Doors:"));
+Door newDoor = new Door(doorInfo.get(1),doorInfo.get(0),doorInfo.get(2));
+
+
+  List<String>doorsInfo = fileInfo.subList(doorsIndex,(fileInfo.size()-1));
+        doorsInfo.remove(0);
+        for(String door: doorsInfo){
+            List<String> doorInfo = (List<String>) door.lines();
