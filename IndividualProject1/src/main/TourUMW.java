@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
+import static java.lang.System.exit;
+
 public class TourUMW {
 
 
@@ -26,131 +28,32 @@ public class TourUMW {
         TourStatus umwTour = new TourStatus();
         umwTour.setCampus(umw);
         umwTour.setCurrentLocation(umw.getStartingLocation());
-        String response = "";
+        ExitCommand exit = null;
 
-    while (response != "q"){
+        while (exit == null) {
             Location currently = umwTour.getCurrentLocation();
-        if (currently.isOutside() && currently.isHaveVisited()) {
             System.out.println(currently.getName());
             System.out.println("These are the possible doors for this location.");
             for (Door door : currently.getDoors()) {
                 System.out.println(door.describe());
             }
             System.out.println("These are the available items for this location.");
-            for (Item item:currently.getItems()){
-                System.out.println(item.describe() + "\n");
-            }
-            System.out.println("What direction would you like to go next? Please enter n,e,s,w or q to quit.");
-            response = promptUser(stdin);
-            Location possibleUpdate = currently.leaveLocation(response);
-            while (possibleUpdate == null) {
-                System.out.println("You are currently at "+ currently.getName());
-                System.out.println("These are the possible doors for this location.");
-                for (Door door : currently.getDoors()) {
-                    System.out.println(door.describe());
-                }
-                System.out.println("These are the available items for this location.");
-                for (Item item:currently.getItems()){
-                    System.out.println(item.describe() + "\n");
-                }
-                System.out.println("What direction would you like to go next? Please enter n,e,s,w or q to quit.");
-                response = promptUser(stdin);
-                possibleUpdate = currently.leaveLocation(response);
-
-            }
-            if (possibleUpdate != null) {
-                umwTour.setCurrentLocation(possibleUpdate);
-                umw.removeLocation(possibleUpdate.getName());
-                currently.setHaveVisited(true);
-
-            } else {
-
-            }
-        } else if (currently.isOutside() && !currently.isHaveVisited()) {
-            System.out.println(currently.getName());
-            System.out.println(currently.getDescription());
-            System.out.println("These are the possible doors for this location.");
-            for (Door door : currently.getDoors()) {
-                System.out.println(door.describe());
-            }
-            System.out.println("These are the available items for this location.");
-            for (Item item:currently.getItems()){
-                System.out.println(item.describe() + "\n");
-            }
-            System.out.println("What direction would you like to go next? Please enter n,e,s,w or q to quit.");
-            response = promptUser(stdin);
-            Location possibleUpdate = currently.leaveLocation(response);
-            while (possibleUpdate == null) {
-                System.out.println("You are currently at "+ currently.getName());
-                System.out.println("These are the possible doors for this location.");
-                for (Door door : currently.getDoors()) {
-                    System.out.println(door.describe());
-                }
-                System.out.println("These are the available items for this location.");
-                for (Item item:currently.getItems()){
-                    System.out.println(item.describe() + "\n");
-                }
-                System.out.println("What direction would you like to go next? Please enter n,e,s,w or q to quit.");
-                response = promptUser(stdin);
-                possibleUpdate = currently.leaveLocation(response);
-
-            }
-            if (possibleUpdate != null) {
-                umwTour.setCurrentLocation(possibleUpdate);
-                umw.removeLocation(possibleUpdate.getName());
-                currently.setHaveVisited(true);
-
-            } else {
-
-            }
-        } else if (!currently.isOutside() && !currently.isHaveVisited()) {
-            System.out.println(currently.getName());
-            System.out.println(currently.getDescription());
-            System.out.println("These are the possible doors for this location.");
-            for (Door door : currently.getDoors()) {
-                System.out.println(door.describe());
-            }
-            System.out.println("These are the available items for this location.");
-            for (Item item:currently.getItems()){
+            for (Item item : currently.getItems()) {
                 System.out.println(item.describe() + "\n");
             }
 
-            System.out.println("What direction would you like to go next? Please enter n,e,s,w or q to quit.");
-            response = promptUser(stdin);
-            Location possibleUpdate = currently.leaveLocation(response);
-            while (possibleUpdate == null) {
-                System.out.println("You are currently at "+ currently.getName());
-                System.out.println("These are the possible doors for this location.");
-                for (Door door : currently.getDoors()) {
-                    System.out.println(door.describe());
-                }
-                System.out.println("These are the available items for this location.");
-                for (Item item:currently.getItems()){
-                    System.out.println(item.describe() + "\n");
-                }
-                System.out.println("What direction would you like to go next? Please enter n,e,s,w or q to quit.");
-                response = promptUser(stdin);
-                possibleUpdate = currently.leaveLocation(response);
 
-            }
-            if (possibleUpdate != null) {
-                umwTour.setCurrentLocation(possibleUpdate);
-                umw.removeLocation(possibleUpdate.getName());
-                currently.setHaveVisited(true);
+            promptUser(stdin);
+            UserInputCommand.carryOut(umwTour);
 
-            } else {
 
-            }
+
+
 
         }
-    }
+        System.exit(1);
 
     }
-
-
-
-
-
 
 
     /**
@@ -161,25 +64,31 @@ public class TourUMW {
      */
     public static UserInputCommand promptUser(Scanner input) {
         String userInput = input.nextLine();
-            if(userInput.contains("q")){
-                System.out.println("You will now exit the program.");
-                System.exit(1);
+        ArrayList<String> directions = new ArrayList<>();
+        directions.add("n");
+        directions.add("e");
+        directions.add("s");
+        directions.add("w");
+        MovementCommand result = null;
+        if (directions.contains(userInput)) {
+            result = new MovementCommand(userInput);
 
         }
-        else{
+        return result;
 
-        }
-        return userInput;
     }
 
-    /**This method creates a completed campus object from a text file.
+
+    /**
+     * This method creates a completed campus object from a text file.
+     *
      * @param input The name of the scanner that will read the file.
      * @return Campus
      */
 
     public static Campus setUpCampus(Scanner input) {
         System.out.println("Enter the file name containing the information of the campus.");
-        String fileName = promptUser(input);
+        String fileName = input.nextLine();
         Campus campus = new Campus(fileName);
         File file = new File(fileName);
         ArrayList<String> firstRead = new ArrayList<>();
@@ -192,7 +101,7 @@ public class TourUMW {
 
             /**This if statement will run if the file contains the proper format.
              */
-            if (firstRead.contains("*****")&&firstRead.contains("+++")) {
+            if (firstRead.contains("*****") && firstRead.contains("+++")) {
                 ArrayList<String> fileInfo = null;
                 try {
                     fileInfo = new ArrayList<>();
@@ -220,8 +129,7 @@ public class TourUMW {
                         locationsIndex = counter;
                     } else if (output.contains("Doors")) {
                         doorsIndex = counter;
-                    }
-                    else if(output.contains("Items")){
+                    } else if (output.contains("Items")) {
                         itemsIndex = counter;
                     }
 
@@ -241,11 +149,10 @@ public class TourUMW {
                         description = description + " " + locationInfo[counter];
                     }
                     newLocation.setDescription(description);
-                    if(locationInfo[0].contains("Double Drive")||locationInfo[0].contains("Campus Walk")||locationInfo[0].contains("Link")||locationInfo[0].contains("Bell")){
+                    if (locationInfo[0].contains("Double Drive") || locationInfo[0].contains("Campus Walk") || locationInfo[0].contains("Link") || locationInfo[0].contains("Bell")) {
                         newLocation.setOutside(true);
 
-                    }
-                    else{
+                    } else {
                         newLocation.setOutside(false);
                     }
                     umwLocations.add(newLocation);
@@ -253,7 +160,7 @@ public class TourUMW {
                 /**Create all the door objects.
                  */
                 ArrayList<Door> umwDoors = new ArrayList<>();
-                List<String> doorsInfo = fileInfo.subList(doorsIndex,itemsIndex-2);
+                List<String> doorsInfo = fileInfo.subList(doorsIndex, itemsIndex - 2);
                 for (String door : doorsInfo) {
                     String[] doorInfo = door.split("\\r?\\n|\\r");
                     String leavingLocationName = doorInfo[0].stripTrailing();
@@ -262,19 +169,19 @@ public class TourUMW {
                     Location leavingLocation = null;
                     Location enteringLocation = null;
                     int counter = 0;
-                    while (leavingLocation==null) {
+                    while (leavingLocation == null) {
                         Location location = umwLocations.get(counter);
-                            if (location.getName().contains(leavingLocationName)) {
-                                leavingLocation = location;
+                        if (location.getName().contains(leavingLocationName)) {
+                            leavingLocation = location;
 
-                            } else {
-
-                            }
-                            counter++;
+                        } else {
 
                         }
+                        counter++;
+
+                    }
                     counter = 0;
-                    while (enteringLocation==null) {
+                    while (enteringLocation == null) {
                         Location location = umwLocations.get(counter);
                         if (location.getName().contains(enteringLocationName)) {
                             enteringLocation = location;
@@ -306,13 +213,13 @@ public class TourUMW {
                  */
                 ArrayList<Item> umwItems = new ArrayList<>();
                 List<String> itemsInfo = fileInfo.subList(itemsIndex, fileInfo.size() - 1);
-                for(String item:itemsInfo){
+                for (String item : itemsInfo) {
                     Item newItem = new Item();
                     String[] itemInfo = item.split("\\r?\\n|\\r");
                     newItem.setName(itemInfo[0]);
                     newItem.setStartingLocationName(itemInfo[1]);
                     String message = "";
-                    for(int counter = 2; counter < itemInfo.length;counter++){
+                    for (int counter = 2; counter < itemInfo.length; counter++) {
                         message = message + itemInfo[counter];
 
                     }
@@ -353,14 +260,139 @@ public class TourUMW {
     }
 
 
+    public static class MovementCommand implements UserInputCommand {
+        private String direction;
 
-    public class MovementCommand implements UserInputCommand{
-        MovementCommand(){
+        MovementCommand(String direction) {
+            this.direction = direction;
+
 
         }
 
+        public String carryOut(TourStatus ts) {
+            Location currently = ts.getCurrentLocation();
+            String carryPrint ="";
+            if (currently.isOutside() && currently.isHaveVisited()) {
+                carryPrint=(currently.getName());
+                System.out.println("These are the possible doors for this location.");
+                for (Door door : currently.getDoors()) {
+                    System.out.println(door.describe());
+                }
+                System.out.println("These are the available items for this location.");
+                for (Item item : currently.getItems()) {
+                    System.out.println(item.describe() + "\n");
+                }
+
+                Location possibleUpdate = currently.leaveLocation(direction);
+                while (possibleUpdate == null) {
+                    System.out.println("You are currently at " + currently.getName());
+                    System.out.println("These are the possible doors for this location.");
+                    for (Door door : currently.getDoors()) {
+                        System.out.println(door.describe());
+                    }
+                    System.out.println("These are the available items for this location.");
+                    for (Item item : currently.getItems()) {
+                        System.out.println(item.describe() + "\n");
+                    }
+
+                }
+                if (possibleUpdate != null) {
+                    ts.setCurrentLocation(possibleUpdate);
+                    currently.setHaveVisited(true);
+
+                } else {
+
+                }
+            } else if (currently.isOutside() && !currently.isHaveVisited()) {
+                carryPrint=(currently.getName());
+                System.out.println(currently.getDescription());
+                System.out.println("These are the possible doors for this location.");
+                for (Door door : currently.getDoors()) {
+                    System.out.println(door.describe());
+                }
+                System.out.println("These are the available items for this location.");
+                for (Item item : currently.getItems()) {
+                    System.out.println(item.describe() + "\n");
+                }
+
+                Location possibleUpdate = currently.leaveLocation(direction);
+                while (possibleUpdate == null) {
+                    System.out.println("You are currently at " + currently.getName());
+                    System.out.println("These are the possible doors for this location.");
+                    for (Door door : currently.getDoors()) {
+                        System.out.println(door.describe());
+                    }
+                    System.out.println("These are the available items for this location.");
+                    for (Item item : currently.getItems()) {
+                        System.out.println(item.describe() + "\n");
+                    }
+
+
+                }
+                if (possibleUpdate != null) {
+                    ts.setCurrentLocation(possibleUpdate);
+                    currently.setHaveVisited(true);
+
+                } else {
+
+                }
+            } else if (!currently.isOutside() && !currently.isHaveVisited()) {
+                carryPrint=(currently.getName());
+                System.out.println(currently.getDescription());
+                System.out.println("These are the possible doors for this location.");
+                for (Door door : currently.getDoors()) {
+                    System.out.println(door.describe());
+                }
+                System.out.println("These are the available items for this location.");
+                for (Item item : currently.getItems()) {
+                    System.out.println(item.describe() + "\n");
+                }
+
+                Location possibleUpdate = currently.leaveLocation(direction);
+                while (possibleUpdate == null) {
+                    System.out.println("You are currently at " + currently.getName());
+                    System.out.println("These are the possible doors for this location.");
+                    for (Door door : currently.getDoors()) {
+                        System.out.println(door.describe());
+                    }
+                    System.out.println("These are the available items for this location.");
+                    for (Item item : currently.getItems()) {
+                        System.out.println(item.describe() + "\n");
+                    }
+
+                    possibleUpdate = currently.leaveLocation(direction);
+
+                }
+                if (possibleUpdate != null) {
+                    ts.setCurrentLocation(possibleUpdate);
+                    currently.setHaveVisited(true);
+
+                } else {
+
+                }
+
+
+            }
+
+
+            return carryPrint;
+        }
+
+
     }
+    public class ExitCommand implements UserInputCommand{
 
+        private String exit;
 
+        ExitCommand(String exit){
+            this.exit = exit;
+        }
+
+        public String carryOut(TourStatus ts){
+            String nowExit = "You will now exit the program.";
+            return nowExit;
+        }
+
+    }
 }
 
