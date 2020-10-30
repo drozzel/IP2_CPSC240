@@ -204,6 +204,28 @@ public class Location {
     public ArrayList<Item> getItems() {
         return items;
     }
+
+    public String doorDescriptions(){
+        String description = "These are the possible doors for this location.";
+        for(Door door: this.doors){
+            description =description +"\n"+ door.describe();
+
+        }
+        return description;
+    }
+    public String itemDescription(){
+        if(this.items.size()<0) {
+            String description = "These are the available items for this location.";
+            for (Item door : this.items) {
+                description = description + "\n" + door.describe();
+
+            }
+        }
+        else{
+            description = "";
+        }
+        return description;
+    }
 }
 
 
