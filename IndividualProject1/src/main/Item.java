@@ -66,7 +66,7 @@ public class Item {
      * @return
      */
     public String describe(){
-        String description =  this.getName() + "\n" + this.getMessage();
+        String description = "Name: "+ this.getName() + "\n" + "Description: "+ this.getMessage();
         return description;
     }
 }
