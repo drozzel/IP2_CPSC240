@@ -6,6 +6,7 @@ public class Item {
     private String name;
     private String message;
     private String startingLocationName;
+    private String itemNum;
 
     /**This is the default constructor of the item class.
      */
@@ -18,6 +19,20 @@ public class Item {
      */
     Item(Scanner s){
 
+    }
+
+    /**Sets the number for an item.
+     * @param itemNum
+     */
+    public void setItemNum(String itemNum) {
+        this.itemNum = itemNum;
+    }
+
+    /**This method returns the item number.
+     * @return
+     */
+    public String getItemNum() {
+        return itemNum;
     }
 
     /**This sets the name of the Item.
@@ -66,7 +81,7 @@ public class Item {
      * @return
      */
     public String describe(){
-        String description =  this.getName() + "\n" + this.getMessage();
+        String description = "Name: "+ this.getName() + "\n" +"Item Number: "+this.getItemNum()+ "\n"+"Description: "+ this.getMessage();
         return description;
     }
 }
